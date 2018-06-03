@@ -20,18 +20,16 @@ exports.parseMotorMsg = function (obj) {
     
     mData = obj.data;
     mType = (obj.data).substring(0,4);
-    if (mType !== 'fa01') {
-        return null;
-    }
     mRecv = obj.time;
 
     mTimestamp = new Date(obj.time).getTime();
-   
-
-    mInfo = ParseDefine.getInformation(obj.data);
-
     //mMac  = (obj.macAddr).substring(8,16);
     mMac = obj.macAddr;
+    if (mMac !== '0000000005010c00') {
+        return null;
+    }
+
+    mInfo = ParseDefine.getInformation(obj.data);
     mDate = moment(obj.time).format('YYYY/MM/DD HH:mm:ss');
         
     var msg = {mac:mMac,type:mType,data:mData,recv:mRecv,date:mDate,timestamp:mTimestamp};
